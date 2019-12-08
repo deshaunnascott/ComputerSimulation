@@ -1,0 +1,2 @@
+INCLUDE /afs/umbc.edu/software/cadence/software_2008/IUS61/tools.lnx86/inca/files/cds.lib
+DEFINE vhdl_lib $HOME/vhdl/vhdl_lib

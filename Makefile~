@@ -1,0 +1,83 @@
+# Makefile for Cadence "inca" "ncvhdl"  VHDL
+#
+# use  tcsh
+#      source vhdl_cshrc
+#      make
+#
+# must have set up  cds.lib  and  hdl.var  in default directory
+# must have subdirectory "vhdl_lib",  mkdir  vhdl_lib, or just  make clean 
+
+# Author:       De'Shaunna Scott
+# Date:         10/10/18
+# Email:        dscott6@umbc.edu
+# File:         Makefile
+# Description:  Appendable Makefile used for CMSC 411 Homeworks and Projects
+
+# Add All Executables for Homeworks and Projects Here
+all: part2b.out #add32_test.out tadd32.out pmul16_test.out part3a.out part2b.out part2a.out part1ce.out 
+
+add32_test.out:  add32_test.vhdl add32_test.run
+	ncvhdl -v93 add32_test.vhdl
+	ncelab -v93 add32_test:circuits
+	ncsim -batch  -logfile add32_test.out -input add32_test.run add32_test
+
+# Added for Homework 4
+tadd32.out: add32.vhdl tadd32.vhdl tadd32.run
+	ncvhdl -v93 add32.vhdl
+	ncvhdl -v93 tadd32.vhdl
+	ncelab -v93 tadd32:circuits
+	ncsim -batch -logfile tadd32.out -input tadd32.run tadd32
+
+# Added for Homework 6
+pmul16_test.out: pmul16.vhdl pmul16_test.vhdl pmul16_test.run
+	ncvhdl -v93 pmul16.vhdl
+	ncvhdl -v93 pmul16_test.vhdl
+	ncelab -v93 pmul16_test:circuits
+	ncsim -batch -logfile pmul16_test.out -input pmul16_test.run pmul16_test
+
+# Added for Part1 of Project
+part1ce.out: part1ce.vhdl add32.vhdl bshift.vhdl pmul16.vhdl divcas16.vhdl part1ce.run part1ce.abs
+	ncvhdl -v93 add32.vhdl
+	ncvhdl -v93 bshift.vhdl
+	ncvhdl -v93 pmul16.vhdl
+	ncvhdl -v93 divcas16.vhdl
+	ncvhdl -v93 part1ce.vhdl  # renamed and modified part1ce_start.vhdl
+	ncelab -v93 part1ce:schematic
+	ncsim  -batch -logfile part1ce.out -input part1ce.run part1ce
+
+# Added for Part2a of Project
+part2a.out: part2a.vhdl add32.vhdl bshift.vhdl part2a.run part2a.abs
+	ncvhdl -v93 add32.vhdl
+	ncvhdl -v93 bshift.vhdl
+	ncvhdl -v93 pmul16.vhdl
+	ncvhdl -v93 divcas16.vhdl
+	ncvhdl -v93 part2a.vhdl  # renamed and modified part1ce.vhdl
+	ncelab -v93 part2a:schematic
+	ncsim  -batch -logfile part2a.out -input part2a.run part2a
+
+# Added for Part2b of Project
+part2b.out: part2b.vhdl add32.vhdl bshift.vhdl part2b.run part2b.abs
+	ncvhdl -v93 add32.vhdl
+	ncvhdl -v93 bshift.vhdl
+	ncvhdl -v93 pmul16.vhdl
+	ncvhdl -v93 divcas16.vhdl
+	ncvhdl -v93 part2b.vhdl  # renamed and modified part2a.vhdl
+	ncelab -v93 part2b:schematic
+	ncsim  -batch -logfile part2b.out -input part2b.run part2b
+
+# Added for Part3a of Project
+part3a.out: part3a.vhdl part3a.run part3a.abs add32.vhdl bshift.vhdl
+	ncvhdl -v93 add32.vhdl
+	ncvhdl -v93 bshift.vhdl
+	ncvhdl -v93 pmul16.vhdl
+	ncvhdl -v93 divcas16.vhdl
+	ncvhdl -v93 part3a.vhdl  # renamed and modified part2b.vhdl
+	ncelab -v93 part3a:schematic
+	ncsim  -batch -logfile part3a.out -input part3a.run part3a
+
+clean:
+	rm -f *.log
+	rm -rf vhdl_lib
+	mkdir  vhdl_lib
+	rm -f *.out
+
